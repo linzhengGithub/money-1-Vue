@@ -2,28 +2,37 @@
   <div>
     <label class="notes">
       <span class="name">备注</span>
-      <input type="text" placeholder="在这里输入备注">
+      <input type="text"
+             placeholder="在这里输入备注"
+            v-model="value"
+      ><!-- :value="value" @input="value = $event.target.value" 可以缩写成v-model="value"-->
     </label>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Notes'
-  };
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  @Component
+  export default class Notes extends Vue {
+    value = '';
+  }
 </script>
 
 <style lang="scss" scoped>
-  .notes{
+  .notes {
     display: flex;
     font-size: 14px;
     background: #f5f5f5;
     padding-left: 16px;
     align-items: center;
-    .name{
+
+    .name {
       padding-right: 16px;
     }
-    input{
+
+    input {
       height: 64px;
       flex-grow: 1;
       background: transparent;
