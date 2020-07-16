@@ -2,16 +2,18 @@
   <div>
     <ul class="types">
       <li :class="type === '-' && 'selected'"
-          @click="selectedType('-')">支出</li><!--type === '-' : 'selected' ? ''-->
+          @click="selectedType('-')">支出
+      </li><!--type === '-' : 'selected' ? ''-->
       <li :class="type === '+' && 'selected'"
-          @click="selectedType('+')">收入</li>
+          @click="selectedType('+')">收入
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue {
@@ -22,6 +24,11 @@
         throw new Error('type is unknown!');
       }
       this.type = type;
+    }
+
+    @Watch('type')
+    onTypeChanged(value: string) {
+      this.$emit('update:value', value);
     }
   }
 </script>

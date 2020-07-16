@@ -3,8 +3,9 @@
     <ul class="current">
       <li v-for="tag in dataSource" :key="tag"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
-        @click="toggle(tag)"
-      >{{tag}}</li>
+          @click="toggle(tag)"
+      >{{tag}}
+      </li>
     </ul>
     <div class="new">
       <button @click="create()">新增按钮</button>
@@ -14,29 +15,36 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop} from 'vue-property-decorator';
+  import {Component, Prop, Watch} from 'vue-property-decorator';
 
   @Component
   export default class Tags extends Vue {
     @Prop() readonly dataSource: string | undefined;
     selectedTags: string[] = [];
-    toggle(tag: string){
+
+    toggle(tag: string) {
       const index = this.selectedTags.indexOf(tag);
-      if (index >= 0){
-          this.selectedTags.splice(index,1)
-      }else {
-        this.selectedTags.push(tag)
+      if (index >= 0) {
+        this.selectedTags.splice(index, 1);
+      } else {
+        this.selectedTags.push(tag);
       }
     }
-    create(){
-     const name = window.prompt('要添加的标签名：')
-      if (name === ''){
+
+    @Watch('selectedTags')
+    onSelectedTagsChanged(value: string) {
+      this.$emit('update:value', value);
+    }
+
+    create() {
+      const name = window.prompt('要添加的标签名：');
+      if (name === '') {
         console.log(name);
-        window.alert('标签名不能为空！')
-      }else if (name === null){
+        window.alert('标签名不能为空！');
+      } else if (name === null) {
         return;
-      }else if(this.dataSource){
-        this.$emit('update:dataSource',[...this.dataSource,name])
+      } else if (this.dataSource) {
+        this.$emit('update:dataSource', [...this.dataSource, name]);
       }
     }
   }
@@ -50,9 +58,11 @@
     flex-direction: column;
     flex-grow: 1;
     justify-content: flex-end;
+
     > .current {
       display: flex;
       flex-wrap: wrap;
+
       > li {
         background: #d9d9d9;
         $h: 24px;
@@ -62,7 +72,8 @@
         padding: 0 16px;
         margin-right: 12px;
         margin-top: 4px;
-        &.selected{
+
+        &.selected {
           background: #f60;
           color: white;
         }
