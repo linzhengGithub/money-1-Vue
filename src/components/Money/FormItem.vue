@@ -4,7 +4,8 @@
       <span class="name">{{this.fieldName}}</span>
       <input type="text"
              :placeholder="placeholder"
-             v-model="value"
+             :value="value"
+             @input="onValueChanged($event.target.value)"
       ><!-- :value="value" @input="value = $event.target.value" 可以缩写成v-model="value"-->
     </label>
   </div>
@@ -16,7 +17,7 @@
 
   @Component
   export default class FormItem extends Vue {
-    value = '';
+    @Prop({default: ''}) readonly value!: string;
     @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
 
