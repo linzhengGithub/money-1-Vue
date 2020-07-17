@@ -2,7 +2,9 @@
   <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
     <Types @update:value="onUpdateType"/>
-    <FormItem field-name="备注" placeholder="在这里添加备注" @update:value="onUpdateNotes"/>
+    <div class="note  s">
+      <FormItem field-name="备注" placeholder="在这里添加备注" @update:value="onUpdateNotes"/>
+    </div>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
   </Layout>
 </template>
@@ -65,4 +67,7 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
+  .notes{
+    padding: 12px 0;
+  }
 </style>
