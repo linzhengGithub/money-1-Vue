@@ -33,7 +33,7 @@
         const message = tagsListModel.create(name);
         if (message === 'duplicated'){
           window.alert('标签名重复！')
-        }else {
+        }else if(message === 'success'){
           window.alert('保存成功！')
         }
       }

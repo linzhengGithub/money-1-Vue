@@ -49,7 +49,9 @@
     }
     remove(){
       if(this.tag){
-        tagsListModel.remove(this.tag.id)
+        if(tagsListModel.remove(this.tag.id)){
+          this.$router.back();
+        }
       }
     }
     goBack(){
