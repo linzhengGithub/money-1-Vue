@@ -18,17 +18,20 @@
   import Types from '@/components/Money/Types.vue';
   import {Component, Watch} from 'vue-property-decorator';
   import recordListModel from '@/models/recordListModel';
+  import tagsListModel from '@/models/tagsListModel';
 
+  const recordList = recordListModel.fetch();
+  const tagList = tagsListModel.fetch();
 
   @Component({
     components: {Types, FormItem, Tags, NumberPad},
   })
   export default class Money extends Vue {
-    tags = ['衣', '食', '住', '行'];
+    tags = tagList;
+    recordList: RecordItem[] = recordList;
     record: RecordItem = {
       tags: [], note: '', type: '-', amount: 0
     };
-    recordList = recordListModel.fetch();
 
     onUpdateTags(value: string[]) {
       this.record.tags = value;
@@ -47,14 +50,12 @@
     }
 
     saveRecord() {
-      const record2: RecordItem = recordListModel.clone(this.record);
-      record2.createAt = new Date();
-      this.recordList.push(record2);
+      recordListModel.create(this.record)
     }
 
     @Watch('recordList')
     onRecordListChanged() {
-      recordListModel.save(this.recordList);
+      recordListModel.save();
     }
   }
 </script>
@@ -68,7 +69,8 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
-  .notes{
+
+  .notes {
     padding: 12px 0;
   }
 </style>
