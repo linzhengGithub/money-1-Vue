@@ -8,7 +8,7 @@
       </li>
     </ul>
     <div class="new">
-      <button @click="create()">新增按钮</button>
+      <button @click="create">新增按钮</button>
     </div>
   </div>
 </template>
@@ -44,6 +44,7 @@
       } else if (name === null) {
         return;
       } else if (this.dataSource) {
+        console.log(name);
         this.$emit('update:dataSource', [...this.dataSource, name]);
       }
     }

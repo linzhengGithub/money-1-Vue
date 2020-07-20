@@ -19,7 +19,6 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import tagsListModel from '@/models/tagsListModel';
   import Button from '@/components/Button.vue';
   @Component({
     components: {Button}
@@ -29,13 +28,8 @@
 
     createTag() {
       const name = window.prompt('新建标签名是：');
-      if (name) {
-        const message = tagsListModel.create(name);
-        if (message === 'duplicated'){
-          window.alert('标签名重复！')
-        }else if(message === 'success'){
-          window.alert('保存成功！')
-        }
+      if(name){
+        window.createTag(name)
       }
     }
   }
