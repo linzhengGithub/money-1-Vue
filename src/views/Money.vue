@@ -6,7 +6,6 @@
       <FormItem field-name="备注" placeholder="在这里添加备注" @update:value="onUpdateNotes"/>
     </div>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
-    {{recordList}}
   </Layout>
 </template>
 
@@ -18,16 +17,15 @@
   import Types from '@/components/Money/Types.vue';
   import {Component, Watch} from 'vue-property-decorator';
   import recordListModel from '@/models/recordListModel';
-  import tagsListModel from '@/models/tagsListModel';
 
   const recordList = recordListModel.fetch();
-  const tagList = tagsListModel.fetch();
+
 
   @Component({
     components: {Types, FormItem, Tags, NumberPad},
   })
   export default class Money extends Vue {
-    tags = tagList;
+    tags = window.tagList;
     recordList: RecordItem[] = recordList;
     record: RecordItem = {
       tags: [], note: '', type: '-', amount: 0

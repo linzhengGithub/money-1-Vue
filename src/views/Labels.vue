@@ -25,7 +25,7 @@
     components: {Button}
   })
   export default class Labels extends Vue {
-    tags = tagsListModel.fetch();
+    tags = window.tagList;
 
     createTag() {
       const name = window.prompt('新建标签名是：');
