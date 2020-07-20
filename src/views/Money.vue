@@ -5,7 +5,7 @@
     <div class="notes">
       <FormItem field-name="备注" placeholder="在这里添加备注" @update:value="onUpdateNotes"/>
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags :data-source="tags"/>
   </Layout>
 </template>
 
@@ -29,10 +29,6 @@
     record: RecordItem = {
       tags: [], note: '', type: '-', amount: 0
     };
-
-    onUpdateTags(value: string[]) {
-      this.record.tags = value;
-    }
 
     onUpdateNotes(value: string) {
       this.record.note = value;
