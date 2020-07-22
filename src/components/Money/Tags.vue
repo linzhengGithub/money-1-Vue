@@ -19,20 +19,19 @@
   import {mixins} from 'vue-class-component';
   import TagHelper from '@/mixins/TagHelper';
 
-  @Component({
-    computed:{
-      tagList(){
-        return this.$store.state.tagList;
-      }
-    }
-  })
+  @Component
 
-  export default class Tags extends mixins(TagHelper){
+  export default class Tags extends mixins(TagHelper) {
     selectedTags: string[] = [];
 
-    created(){
-      this.$store.commit('fetchRecords')
+    get tagList() {
+      return this.$store.state.tagList;
     }
+
+    created() {
+      this.$store.commit('fetchRecords');
+    }
+
     toggle(tag: string) {
       const index = this.selectedTags.indexOf(tag);
       if (index >= 0) {
@@ -40,7 +39,7 @@
       } else {
         this.selectedTags.push(tag);
       }
-      this.$emit('update:value',this.selectedTags)
+      this.$emit('update:value', this.selectedTags);
     }
 
     @Watch('selectedTags')
