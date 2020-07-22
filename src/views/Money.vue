@@ -5,7 +5,7 @@
     <div class="notes">
       <FormItem field-name="备注" placeholder="在这里添加备注" @update:value="onUpdateNotes"/>
     </div>
-    <Tags :data-source="tags"/>
+    <Tags/>
   </Layout>
 </template>
 
@@ -16,7 +16,6 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Types from '@/components/Money/Types.vue';
   import {Component} from 'vue-property-decorator';
-
 
 
   @Component({

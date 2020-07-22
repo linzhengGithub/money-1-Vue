@@ -1,6 +1,5 @@
 import createId from '@/lib/createId';
 
-const localStorageKeyName = 'tagsList';
 
 const tagStore = {
   //tag store
