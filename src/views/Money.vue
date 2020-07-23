@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
-    <Types @update:value="onUpdateType"/>
+    <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
     <div class="notes">
       <FormItem field-name="备注" placeholder="在这里添加备注" @update:value="onUpdateNotes"/>
     </div>
@@ -16,12 +16,15 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Types from '@/components/Money/Types.vue';
   import {Component} from 'vue-property-decorator';
+  import Tabs from '@/components/Tabs.vue';
+  import recordTypeList from '@/constant/recordTypeList';
 
 
   @Component({
-    components: {Types, FormItem, Tags, NumberPad},
+    components: {Tabs, Types, FormItem, Tags, NumberPad},
   })
   export default class Money extends Vue {
+    recordTypeList = recordTypeList
     get recordList() {
       return this.$store.state.recordList;
     }
@@ -37,9 +40,7 @@
       this.record.note = value;
     }
 
-    onUpdateType(value: string) {
-      this.record.type = value;
-    }
+
 
     onUpdateAmount(value: string) {
       this.record.amount = parseFloat(value);
