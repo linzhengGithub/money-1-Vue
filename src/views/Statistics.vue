@@ -4,11 +4,13 @@
     <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval"/>
     <div>
       <ol>
-        <li v-for="(group,index) in result" :key="index.id">
+        <li v-for="(group,index) in result" :key="index">
           <h3 class="title">{{group.title}}</h3>
           <ol>
             <li v-for="item in group.items" :key="item.id" class="record">
-              {{item.amount}}   {{item.createAt}}
+              <span>{{tagString(item.tags)}}</span>
+              <span class="notes">{{item.note}}</span>
+              <span>￥{{item.amount}}</span>
             </li>
           </ol>
         </li>
@@ -39,13 +41,16 @@
       type HashTableValue = {title: string; items: RecordItem[]}
       const hashTable: { [key: string]: HashTableValue}={};
       for (let i = 0; i < recordList.length;i++){
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const  [date,time] = recordList[i].createAt!.split('T')
         hashTable[date] = hashTable[date] || {title: date,items: []};
         hashTable[date].items.push(recordList[i])
       }
       return hashTable
     }
-
+    tagString(tags: Tag[]){
+      return tags.length === 0 ? '无' : tags.join(',')
+    }
     type = '-';
     interval = 'day';
     intervalList = intervalList;
@@ -72,6 +77,7 @@
       line-height: 24px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
     .title{
       @extend %item;
@@ -79,6 +85,11 @@
     .record{
       background: white;
       @extend %item;
+    }
+    .notes{
+      margin-right: auto;
+      margin-left: 16px;
+      color: #999;
     }
   }
 </style>
