@@ -1,7 +1,7 @@
 type RecordItem = {
   type: string;
   note: string;
-  tags: string[];
+  tags: Tag[];
   amount: number;//数据类型 object | string
   createAt?: string;//等价于createAt: Date | undefined;类 / 构造函数
 }
