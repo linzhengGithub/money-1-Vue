@@ -1,8 +1,7 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <div>
-      <ol>
+      <ol v-if="groupedList.length > 0">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
           <ol>
@@ -14,6 +13,8 @@
           </ol>
         </li>
       </ol>
+    <div v-else class="noResult">
+      目前没有相关信息
     </div>
   </Layout>
 </template>
@@ -42,6 +43,9 @@
       const {recordList} = this;//析构写法const recordList = this.recordList
 
       const newList = clone(recordList).filter(r => r.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+      if (newList.length === 0 ){
+        return [] as Reuslt;
+      }
       type Reuslt = {title: string; total?: number ;items: RecordItem[]}[]
       const  result: Reuslt = [{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'),items:[newList[0]]}];
       for (let i = 1; i < newList.length; i++){
@@ -62,7 +66,7 @@
     }
 
     tagString(tags: Tag[]) {
-      return tags.length === 0 ? '无' : tags.join(',');
+      return tags.length === 0 ? '无' : tags.map(t=>t.name).join('，');
     }
 
     beautify(string: string) {
@@ -87,6 +91,10 @@
 </script>
 
 <style lang="scss" scoped>
+  .noResult{
+    padding: 16px;
+    text-align: center;
+  }
   ::v-deep {
     .type-tabs-item {
       background: #c4c4c4;
